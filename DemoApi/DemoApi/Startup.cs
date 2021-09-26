@@ -26,11 +26,31 @@ namespace DemoApi
         {
 
             services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngularDevClient", builder =>
+                {
+                    builder
+                    .WithOrigins("http://localhost:4200")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+                options.AddPolicy("AllowAngularClient", builder =>
+                {
+                    builder.WithOrigins("http://localhost")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            app.UseCors("AllowAngularDevClient");
+            app.UseCors("AllowAngularClient");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
