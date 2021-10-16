@@ -10,7 +10,7 @@ export class AppComponent {
   title = 'DemoApp';
   response = 'loading';
   constructor(private http: HttpClient){
-    this.http.get('http://localhost:5000/demo',{responseType: 'text'}).subscribe((response:any)=>{
+    this.http.get('http://localhost/demo',{responseType: 'text'}).subscribe((response:any)=>{
       console.log(response);
       this.response = response;
     })
